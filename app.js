@@ -22,13 +22,12 @@ app.get('/articles', async (req, res) => {
   const articles = await getArticles();
   res.send(articles);
 });
+
 //Buscar Artículos por Nombre
 app.get('/:search', async(req, res)=> {
   const search = req.query
-
   const result = await seachrArticlesByname(search);
   res.send(result);
-
 } );
 
 app.get('/article-details/:id', async (req, res) => {
@@ -36,12 +35,11 @@ app.get('/article-details/:id', async (req, res) => {
   const article = await getArticleDetails(id);
   res.send(article);
 });
+
 //GET Customer per email and password
 app.get('/customer/:login', async (req, res) =>{
   const {email, password} = req.query;
-
   const login = await getCustomer(email, password);
-
   if (login.length == 0){
      res.status(404).send()
   }else{
@@ -64,7 +62,6 @@ app.post('/customer', async (req, res) => {
     id_country,
   } = req.body;
 
-
   const customer = await insertCustomer(
     id_customer,
     name,
@@ -83,10 +80,7 @@ app.post('/customer', async (req, res) => {
 
 app.post('/order', async (req, res) => {
   console.log('Order:',req.body);
-
   const orderDetail = await makeTheOrder(req.body);
-
-  // res.status(201).contentType('application/json').send(orderDetail);
   res.status(201).send(orderDetail);
 });
 app.post('/email', async (req, res) => {
@@ -141,11 +135,8 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke');
 });
 
-
  const PORT = process.env.PORT || 8080;
-
  app.listen(PORT, () => {
-
-  console.log(`Server is running on port ${PORT} `);
+console.log(`Server is running on port ${PORT} `);
 });
 
